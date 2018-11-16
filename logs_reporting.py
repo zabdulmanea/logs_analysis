@@ -3,44 +3,44 @@
 import psycopg2
 
 
-def get_results(query):
+def get_result(query):
     """Return all results from 'news database"""
     db = psycopg2.connect("dbname=news")
-    c = db.cursor()
-    c.execute("select content, time from posts order by time desc")
-    posts = c.fetchall()
+    cursor = db.cursor()
+    cursor.execute(query)
+    result = cursor.fetchall()
     db.close()
-    return posts
+    return result
 
 
-# 1. What are the most popular three articles of all time?
-"""
-SELECT articles.title AS "Popular Articles", COUNT(*) AS Views
-FROM log JOIN articles
-ON articles.slug = SUBSTRING(log.path,10)
-GROUP BY articles.title
-ORDER BY Views DESC LIMIT 3;
-"""
+questions = [
+    "The most popular three articles of all time",
+    "The most popular article authors of all time",
+    "Days with more than 1% of requests lead to errors",
+]
 
-# 2. Who are the most popular article authors of all time?
-"""
-SELECT authors.name, COUNT(*) AS Views
-FROM log, articles, authors
-WHERE SUBSTRING(log.path,10) = articles.slug
-AND articles.author = authors.id
-GROUP BY authors.name
-ORDER BY views DESC;
-"""
+queries = [
+  """ SELECT articles.title AS "Popular Articles", COUNT(*) AS Views
+      FROM log JOIN articles
+      ON articles.slug = SUBSTRING(log.path,10)
+      GROUP BY articles.title
+      ORDER BY Views DESC LIMIT 3;""",
+  """ SELECT authors.name, COUNT(*) AS Views
+      FROM log, articles, authors
+      WHERE SUBSTRING(log.path,10) = articles.slug
+      AND articles.author = authors.id
+      GROUP BY authors.name
+      ORDER BY views DESC;""",
+  """ WITH logs_status AS(
+	    SELECT time::date AS date, status, COUNT(*) AS status_num
+	    FROM log
+	    GROUP BY time::date, status ) 
+      SELECT a.date, Round((b.status_num*1.0/(a.status_num+b.status_num))*100, 2) AS error
+      FROM logs_status a JOIN logs_status b
+      ON a.date = b.date AND a.status < b.status
+      WHERE (b.status_num*1.0/(a.status_num+b.status_num)*100) > 1;
+  """
+]
 
-# 3. On which days did more than 1% of requests lead to errors?
-"""
-WITH logs_status AS(
-	SELECT time::date AS date, status, COUNT(*) AS status_num
-	FROM log
-	GROUP BY time::date, status
-) 
-SELECT a.date, Round((b.status_num*1.0/(a.status_num+b.status_num))*100, 2) AS error
-FROM logs_status a JOIN logs_status b
-ON a.date = b.date AND a.status < b.status
-WHERE (b.status_num*1.0/(a.status_num+b.status_num)*100) > 1;
-"""
+if __name__ == '__main__':
+  print(get_result(queries[0]))
