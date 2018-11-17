@@ -21,7 +21,7 @@ You need [Python 3](https://www.python.org/), [VirtualBox](https://www.virtualbo
 
 **2. Download the VM configuration**
 * Open terminal.
-* Clone the VM configuration repository:
+* Clone the VM configuration repository:  
 `git clone https://github.com/udacity/fullstack-nanodegree-vm` 
 * Change the directory to your vagrant directory
 * Run `vagrant up` - to download and install the Linux operating system.
