@@ -16,7 +16,7 @@ queries = [
       FROM log JOIN articles
       ON articles.slug = SUBSTRING(log.path,10)
       GROUP BY articles.title
-      ORDER BY Views DESC LIMIT 3 """,
+      ORDER BY Views DESC LIMIT 3; """,
     """ SELECT authors.name, COUNT(*) AS Views
         FROM log, articles, authors
         WHERE SUBSTRING(log.path,10) = articles.slug
@@ -31,8 +31,7 @@ queries = [
         Round((b.status_num*1.0/(a.status_num+b.status_num))*100, 2) AS error
         FROM logs_status a JOIN logs_status b
         ON a.date = b.date AND a.status < b.status
-        WHERE (b.status_num*1.0/(a.status_num+b.status_num)*100) > 1;
-    """
+        WHERE (b.status_num*1.0/(a.status_num+b.status_num)*100) > 1; """
 ]
 
 
