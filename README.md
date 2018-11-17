@@ -7,7 +7,7 @@ This is a python module uses information from logs in a large database and build
 * `Articles`: includes information of articles.
 * `Log`: includes logs of every article request to the web server.
 
-#### The project aims to solve these question
+#### The project aims to solve these question:
 1. What are the most popular three articles of all time?
 2. Who are the most popular article authors of all time?
 3. On which days did more than 1% of requests lead to errors?
@@ -24,7 +24,7 @@ This is a python module uses information from logs in a large database and build
 
 **2. Download the VM configuration**
 * Open terminal.
-* Clone the VM configuration repository to your computer:
+* Clone the VM configuration repository:
 `git clone https://github.com/udacity/fullstack-nanodegree-vm` 
 * Change the directory to vagrant directory.
 * Run `vagrant up` - to download and install the Linux operating system.
@@ -35,19 +35,20 @@ This is a python module uses information from logs in a large database and build
 * Unzip the file and put it inside vagrant directory.
 * Run `psql -d news -f newsdata.sql`
 
-**4. Clone the project repository to vagrant directory**
+**4. Clone the project repository to vagrant directory**  
 `git clone https://github.com/zabdulmanea/logs_analysis.git`
 
 **5. Run Python Module**
-* Change directory to project repository: `cd /vagranat/logs_analysis`
+* Change directory to the project directory:  
+`cd /vagranat/logs_analysis`
 * Run `python3 logs_reporting.py`
 
-**6. View Results Summary**
+**6. View Results Summary**  
 You can see the logs Analysis results inside `logs_results.txt`
 
 
 ### Creating Views
-1. Open terminal and satrt the VM
+1. Open terminal and satrt the VM.
 
 2. Run `psql -d news` - to connect to the database.
 
