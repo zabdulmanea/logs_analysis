@@ -26,7 +26,7 @@ queries = [
     """ WITH logs_status AS(
             SELECT time::date AS date, status, COUNT(*) AS status_num
             FROM log
-            GROUP BY time::date, status )
+            GROUP BY date, status )
         SELECT to_char(a.date, 'FMMonth DD, YYYY'),
         Round((b.status_num*1.0/(a.status_num+b.status_num))*100, 2) AS error
         FROM logs_status a JOIN logs_status b
