@@ -1,7 +1,7 @@
 # Log Analysis
 An internal reporting tool uses information from the database of newspaper articles and web servers log. This reporting tool aims to build an informative summary of most articles people like to read, most authors people like thier article and the days when more than 1% request errors has occured. The project is guided by [Udacity’s Full Stack Developer Nanodegree Program](https://sa.udacity.com/course/full-stack-web-developer-nanodegree--nd004).
 
-## Description
+## Project Description
 This is a python module uses information from logs in a large database and build an informative summary from that information. The database of this project is from a newspaper database and it includes three tables:
 * `Authors`: includes information about articles authors.
 * `Articles`: includes information of articles.
@@ -19,14 +19,14 @@ This is a python module uses information from logs in a large database and build
 * [VirtualBox](https://www.virtualbox.org/).
 * [Vagrant](https://www.vagrantup.com/).
 
-### Setup
+### Project Setup
 **1. Install [Vagrant](https://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/)**
 
 **2. Download the VM configuration**
 * Open terminal.
 * Clone the VM configuration repository:
 `git clone https://github.com/udacity/fullstack-nanodegree-vm` 
-* Change the directory to vagrant directory.
+* Change the directory to your vagrant directory
 * Run `vagrant up` - to download and install the Linux operating system.
 * Run `vagrant ssh` - to log into your Linux VM!
 
@@ -48,12 +48,12 @@ You can see the logs Analysis results inside `logs_results.txt`
 
 
 ### Creating Views
-1. Open terminal and satrt the VM.
+1. Open terminal and start the VM.
 
 2. Run `psql -d news` - to connect to the database.
 
 3. Create **Popular Articles** View
-```
+```sql
 CREATE OR REPLACE VIEW popular_articles AS
     SELECT articles.title AS "Popular Articles", COUNT(*) AS Views
     FROM log JOIN articles
@@ -67,7 +67,7 @@ CREATE OR REPLACE VIEW popular_articles AS
  views            | bigint | 
 
 4. Create **Popular Authors** View
-```
+```sql
 CREATE OR REPLACE VIEW popular_authors AS
     SELECT authors.name, COUNT(*) AS Views
     FROM log, articles, authors
@@ -82,7 +82,7 @@ CREATE OR REPLACE VIEW popular_authors AS
  views   | bigint | 
 
 5. Create **Request Errors** View
-```
+```sql
 CREATE OR REPLACE VIEW log_errors AS
     WITH logs_status AS(
         SELECT time::date AS date, status, COUNT(*) AS status_num
