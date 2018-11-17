@@ -12,14 +12,11 @@ This is a python module uses information from logs in a large database and build
 2. Who are the most popular article authors of all time?
 3. On which days did more than 1% of requests lead to errors?
 
-## Instructions
 
-### PreRequests
-* [Python 3](https://www.python.org/).
-* [VirtualBox](https://www.virtualbox.org/).
-* [Vagrant](https://www.vagrantup.com/).
+## PreRequests
+You need [Python 3](https://www.python.org/), [VirtualBox](https://www.virtualbox.org/) and [Vagrant](https://www.vagrantup.com/) to run this project successfully.
 
-### Project Setup
+## Project Setup
 **1. Install [Vagrant](https://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/)**
 
 **2. Download the VM configuration**
@@ -47,7 +44,7 @@ This is a python module uses information from logs in a large database and build
 You can see the logs Analysis results inside `logs_results.txt`
 
 
-### Creating Views
+## Creating Views
 1. Open terminal and start the VM.
 
 2. Run `psql -d news` - to connect to the database.
