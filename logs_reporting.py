@@ -98,6 +98,8 @@ if __name__ == '__main__':
     top_authors = popular_authors()
     # get results of days with more than 1% errors
     error_days = top_errors_days()
+    # close db connection
+    db.close()
     # print log analysis summary
     print_results()
-    db.close()
+    
