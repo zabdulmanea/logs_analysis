@@ -82,11 +82,14 @@ def top_errors_days():
 
 
 def print_results():
-    """Write results into new text file"""
+    """Write results into new text file and terminal"""
+    summary_title = "-- Log Analysis Reporting Tool Resluts --\r\n"
+    # print results into a file
     logs_file = open("logs_results.txt", "w+")
-    logs_file.write('-- Log Analysis Reporting Tool Resluts --\r\n')
-    logs_file.write(top_articles + top_authors + error_days)
+    logs_file.write(summary_title + top_articles + top_authors + error_days)
     logs_file.close()
+    # print results into terminal
+    print(summary_title + top_articles + top_authors + error_days)
 
 
 if __name__ == '__main__':
