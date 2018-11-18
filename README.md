@@ -58,10 +58,6 @@ CREATE OR REPLACE VIEW popular_articles AS
     GROUP BY articles.title
     ORDER BY Views DESC LIMIT 3;
 ```
-|     Column      |  Type  | 
-------------------|--------|
- Popular Articles | text   | 
- views            | bigint | 
 
 4. Create **Popular Authors** View
 ```sql
@@ -73,10 +69,6 @@ CREATE OR REPLACE VIEW popular_authors AS
     GROUP BY authors.name
     ORDER BY views DESC;
 ```
-| Column |  Type  |
----------|--------|
- name    | text   | 
- views   | bigint | 
 
 5. Create **Request Errors** View
 ```sql
@@ -91,7 +83,3 @@ CREATE OR REPLACE VIEW log_errors AS
     ON a.date = b.date AND a.status < b.status
     WHERE (b.status_num*1.0/(a.status_num+b.status_num)*100) > 1;
 ```
-| Column |  Type   |
----------|---------|
- date    | text    | 
- error   | numeric | 
