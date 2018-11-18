@@ -35,44 +35,69 @@ queries = [
 ]
 
 
+def connect_db(db_name):
+    """Connect to the PostgreSQL database then return the connection"""
+    try:
+        db = psycopg2.connect("dbname=" + db_name)
+        cursor = db.cursor()
+        return db, cursor
+    except psycopg2.Error as e:
+        print("Unable to connect to '" + db_name + "' database")
+        # throw an error
+        raise e
+
+
 def get_result(query):
-    """Return all queries results from 'news database"""
-    db = psycopg2.connect("dbname=news")
-    cursor = db.cursor()
+    """Execute the PostgreSQL query then return the results"""
     cursor.execute(query)
     result = cursor.fetchall()
-    db.close()
     return result
 
 
-def view_result():
-    """Get queries results and write results into new text file"""
+def popular_articles():
+    """Get popular articales results"""
+    articles = "\r\n1. %s:\r\n" % questions[0]
+    result = get_result(queries[0])
+    for article in result:
+        articles += '"' + article[0] + '" - ' + str(article[1]) + ' views\r\n'
+    return articles
 
+
+def popular_authors():
+    """Get popular authors results"""
+    authors = "\r\n2. %s:\r\n" % questions[1]
+    result = get_result(queries[1])
+    for author in result:
+        authors += author[0] + ' - ' + str(author[1]) + ' views\r\n'
+    return authors
+
+
+def top_errors_days():
+    """Get days with error more than 1%"""
+    days = "\r\n3. %s:\r\n" % questions[2]
+    result = get_result(queries[2])
+    for day in result:
+        days += day[0] + ' - ' + str(day[1]) + '% errors\r\n'
+    return days
+
+
+def print_results():
+    """Write results into new text file"""
     logs_file = open("logs_results.txt", "w+")
     logs_file.write('-- Log Analysis Reporting Tool Resluts --\r\n')
-
-    i = 0
-    while i < len(questions):
-        logs_file.write("\r\n* %s:\r\n" % questions[i])
-        query_results = get_result(queries[i])
-
-        j = 0
-        while j < len(query_results):
-            if i == 0:
-                logs_file.write('"' + query_results[j][0] + '" - ' +
-                                str(query_results[j][1]) + ' views')
-            elif i == 1:
-                logs_file.write(query_results[j][0] + ' - ' +
-                                str(query_results[j][1]) + ' views')
-            else:
-                logs_file.write(query_results[j][0] + ' - ' +
-                                str(query_results[j][1]) + '% errors')
-            logs_file.write('\r\n')
-            j += 1
-
-        i += 1
+    logs_file.write(top_articles + top_authors + error_days)
     logs_file.close()
 
 
 if __name__ == '__main__':
-    view_result()
+    # connect to news database
+    db, cursor = connect_db("news")
+    # get results of top three articles
+    top_articles = popular_articles()
+    # get results of top authors
+    top_authors = popular_authors()
+    # get results of days with more than 1% errors
+    error_days = top_errors_days()
+    # print log analysis summary
+    print_results()
+    db.close()
